@@ -1,0 +1,303 @@
+.excel-uploader {
+  --eu-primary: #2563eb;
+  --eu-primary-dark: #1d4ed8;
+  --eu-ink: #172033;
+  --eu-muted: #64748b;
+  --eu-border: #dbe3ef;
+  --eu-surface: #ffffff;
+  --eu-soft: #f8fafc;
+  --eu-danger: #b91c1c;
+  --eu-success: #15803d;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+  padding: 24px;
+  color: var(--eu-ink);
+  background: var(--eu-surface);
+  border: 1px solid var(--eu-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgb(15 23 42 / 6%);
+  direction: rtl;
+  font-family: Vazirmatn, IRANSans, Tahoma, Arial, sans-serif;
+  line-height: 1.7;
+}
+
+.excel-uploader *,
+.excel-uploader *::before,
+.excel-uploader *::after {
+  box-sizing: inherit;
+}
+
+.excel-uploader__title {
+  margin: 0 0 4px;
+  color: var(--eu-ink);
+  font-size: 1.35rem;
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.excel-uploader__hint {
+  margin: 0 0 18px;
+  color: var(--eu-muted);
+  font-size: 0.93rem;
+}
+
+.excel-uploader__dropzone {
+  display: flex;
+  min-height: 144px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 22px;
+  color: var(--eu-muted);
+  text-align: center;
+  background: var(--eu-soft);
+  border: 2px dashed #b8c5d8;
+  border-radius: 12px;
+  transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.excel-uploader__dropzone.is-dragging {
+  background: #eff6ff;
+  border-color: var(--eu-primary);
+  box-shadow: inset 0 0 0 1px var(--eu-primary);
+}
+
+.excel-uploader__pick,
+.excel-uploader__actions button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  color: #fff;
+  background: var(--eu-primary);
+  border: 1px solid var(--eu-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.excel-uploader__pick:hover,
+.excel-uploader__actions button:hover {
+  background: var(--eu-primary-dark);
+  border-color: var(--eu-primary-dark);
+}
+
+.excel-uploader__pick:active,
+.excel-uploader__actions button:active {
+  transform: translateY(1px);
+}
+
+.excel-uploader__pick input[type='file'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.excel-uploader__pick:focus-within,
+.excel-uploader__actions button:focus-visible {
+  outline: 3px solid rgb(37 99 235 / 35%);
+  outline-offset: 3px;
+}
+
+.excel-uploader__list,
+.excel-uploader__errors {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.excel-uploader__list {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.excel-uploader__item {
+  min-width: 0;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--eu-border);
+  border-radius: 12px;
+}
+
+.excel-uploader__filehead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.excel-uploader__filehead > div {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.excel-uploader__filehead strong {
+  overflow-wrap: anywhere;
+  color: var(--eu-ink);
+  font-size: 0.97rem;
+  font-weight: 700;
+}
+
+.excel-uploader__filehead small {
+  color: var(--eu-muted);
+  font-size: 0.82rem;
+}
+
+.excel-uploader__status {
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  color: #334155;
+  background: #f1f5f9;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.excel-uploader__status.status-ready,
+.excel-uploader__status.status-parsed {
+  color: #1d4ed8;
+  background: #eff6ff;
+}
+
+.excel-uploader__status.status-parsing,
+.excel-uploader__status.status-uploading {
+  color: #92400e;
+  background: #fffbeb;
+}
+
+.excel-uploader__status.status-uploaded {
+  color: var(--eu-success);
+  background: #f0fdf4;
+}
+
+.excel-uploader__status.status-invalid,
+.excel-uploader__status.status-failed {
+  color: var(--eu-danger);
+  background: #fef2f2;
+}
+
+.excel-uploader__status.status-paused {
+  color: #475569;
+  background: #f1f5f9;
+}
+
+.excel-uploader__progress {
+  height: 8px;
+  overflow: hidden;
+  margin-top: 14px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  direction: ltr;
+}
+
+.excel-uploader__progress span {
+  display: block;
+  height: 100%;
+  background: var(--eu-primary);
+  border-radius: inherit;
+  transition: width 180ms ease;
+}
+
+.excel-uploader__message {
+  margin: 10px 0 0;
+  color: #475569;
+  font-size: 0.88rem;
+  overflow-wrap: anywhere;
+}
+
+.excel-uploader__errors {
+  display: grid;
+  gap: 5px;
+  margin-top: 10px;
+  color: var(--eu-danger);
+  font-size: 0.84rem;
+}
+
+.excel-uploader__errors li {
+  padding-inline-start: 12px;
+  border-inline-start: 2px solid #fecaca;
+  overflow-wrap: anywhere;
+}
+
+.excel-uploader__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.excel-uploader__actions button {
+  min-height: 36px;
+  padding: 5px 13px;
+  font-size: 0.84rem;
+}
+
+.excel-uploader__actions button.secondary {
+  color: #334155;
+  background: #fff;
+  border-color: #cbd5e1;
+}
+
+.excel-uploader__actions button.secondary:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.excel-uploader__privacy {
+  margin: 16px 0 0;
+  color: var(--eu-muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 560px) {
+  .excel-uploader {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .excel-uploader__title {
+    font-size: 1.15rem;
+  }
+
+  .excel-uploader__dropzone {
+    min-height: 126px;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .excel-uploader__filehead {
+    flex-direction: column;
+  }
+
+  .excel-uploader__status {
+    align-self: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .excel-uploader *,
+  .excel-uploader *::before,
+  .excel-uploader *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

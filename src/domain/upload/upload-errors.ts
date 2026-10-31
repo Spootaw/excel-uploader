@@ -1,0 +1,3 @@
+import type { UploadErrorCode } from './types';
+export class UploadServiceError extends Error { constructor(public code:UploadErrorCode,message:string,public status?:number){super(message);this.name='UploadServiceError';} }
+export function httpErrorMessage(status:number,body=''):string { const map:Record<number,string>={400:'درخواست نامعتبر است.',401:'برای ادامه، احراز هویت لازم است.',403:'اجازه دسترسی ندارید.',404:'نشست بارگذاری پیدا نشد.',413:'حجم داده از محدودیت سرور بیشتر است.',422:'اعتبارسنجی فایل در سرور ناموفق بود.',429:'درخواست‌ها بیش از حد مجاز است.',500:'خطای داخلی سرور.',502:'سرور موقتاً در دسترس نیست.',503:'سرویس موقتاً در دسترس نیست.'}; const detail=body.trim().slice(0,300); return `${map[status]||`خطای HTTP ${status}.`}${detail?` ${detail}`:''}`; }

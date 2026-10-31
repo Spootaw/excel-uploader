@@ -1,74 +1,87 @@
-export type FileStatus =
-    | 'selected'
-    | 'validating'
-    | 'invalid'
-    | 'ready'
-    | 'parsing'
-    | 'parsed'
-    | 'uploading'
-    | 'uploaded'
-    | 'failed'
-    | 'cancelled';
-
-export type PipelineStage =
-    | 'selection'
-    | 'file-validation'
-    | 'parsing'
-    | 'data-validation'
-    | 'upload';
-
 export type UploadErrorCode =
-    | 'INVALID_EXTENSION'
-    | 'FILE_TOO_LARGE'
-    | 'TOO_MANY_FILES'
-    | 'MISSING_REQUIRED_COLUMN'
-    | 'INVALID_CELL_VALUE'
-    | 'PARSING_ERROR'
-    | 'UPLOAD_ERROR'
-    | 'CANCELLED'
-    | 'UNKNOWN';
+  | "INVALID_EXTENSION"
+  | "INVALID_FILE_CONTENT"
+  | "MISSING_REQUIRED_COLUMN"
+  | "INVALID_CELL_VALUE"
+  | "PARSING_ERROR"
+  | "HTTP_ERROR"
+  | "NETWORK_ERROR"
+  | "CANCELLED"
+  | "UNKNOWN"
+  | "SERVER_VALIDATION_ERROR";
 
 export interface UploadError {
-    code: UploadErrorCode;
-    message: string;
-    rowNumber?: number;
-    columnName?: string;
-}
-
-export interface SelectedFile {
-    id: string;
-    file: File;
-    name: string;
-    size: number;
-    status: FileStatus;
-    progress: number;
-    errors: UploadError[];
-    totalRows?: number;
-    validRows?: number;
-    invalidRows?: number;
-}
-
-export interface UploadConfig {
-    maxFiles: number;
-    maxFileSizeInBytes: number;
-    acceptedExtensions: string[];
-    requiredColumns: string[];
-}
-
-export interface ParsedRow {
-    [columnName: string]: unknown;
+  code: UploadErrorCode;
+  message: string;
+  rowNumber?: number;
+  columnName?: string;
 }
 
 export interface ParseResult {
-    headers: string[];
-    rows: ParsedRow[];
-    totalRows: number;
+  headers: string[];
+  totalRows: number;
+  validRows: number;
+  invalidRows: number;
+  missingColumns: string[];
+  errors: UploadError[];
+  errorsTruncated: boolean;
 }
 
-export interface ProcessingProgress {
-    stage: PipelineStage;
-    progress: number;
-    processedRows?: number;
-    totalRows?: number;
-    message?: string;
+export type FileStatus =
+  | "invalid"
+  | "ready"
+  | "parsing"
+  | "parsed"
+  | "uploading"
+  | "paused"
+  | "uploaded"
+  | "failed";
+
+export interface UploadSession {
+  uploadId: string;
+  chunkSize: number;
+  uploadedParts: number[];
+}
+
+export interface SelectedFile {
+  id: string;
+  file: File;
+  name: string;
+  size: number;
+  status: FileStatus;
+  progress: number;
+  loadedBytes: number;
+  errors: UploadError[];
+  parsed?: ParseResult;
+  session?: UploadSession;
+  message?: string;
+  savedSession?: boolean;
+}
+
+export interface UploadConfig {
+  acceptedExtensions: string[];
+  requiredColumns: string[];
+  headerAliases: Record<string, string[]>;
+  headerRowIndex: number;
+  chunkSizeInBytes: number;
+  maxErrorSamples: number;
+}
+
+export interface UploadProgress {
+  loaded: number;
+  total: number;
+  percent: number;
+}
+
+export interface UploadPayload {
+  file: File;
+  headers: string[];
+  totalRows: number;
+  validRows: number;
+  invalidRows: number;
+}
+
+export interface UploadResult {
+  uploadId: string;
+  message: string;
 }

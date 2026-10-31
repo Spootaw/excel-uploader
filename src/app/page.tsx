@@ -1,22 +1,25 @@
-import { ExcelUploader } from '@/components/ExcelUploader/ExcelUploader';
+import ExcelUploader from "@/components/ExcelUploader";
 
-export default function HomePage() {
+export default function Home() {
   return (
-      <main className="page-shell">
-        <section className="page-container">
-          <div className="page-header">
-            <span className="eyebrow">SNAPBOX ADMIN</span>
-
-            <h1>آپلود اطلاعات سفارش‌ها</h1>
-
-            <p>
-              فایل Excel سفارش‌ها را انتخاب کنید تا پس از اعتبارسنجی و پردازش
-              برای سرور ارسال شود.
-            </p>
-          </div>
-
-          <ExcelUploader />
-        </section>
-      </main>
+    <main className="page">
+      <nav className="topbar">
+        <span className="brand-mark">S</span>
+        <span>پنل مدیریت اسنپ‌باکس</span>
+        <span className="demo">نسخه آزمایشی</span>
+      </nav>
+      <section className="intro">
+        <span className="eyebrow">مدیریت مرسوله‌ها</span>
+        <h1>بارگذاری گروهی سفارش‌ها</h1>
+        <p>
+          فایل Excel را انتخاب کنید تا بررسی، پردازش و برای ثبت به سرور ارسال
+          شود.
+        </p>
+      </section>
+      <ExcelUploader />
+      <p className="footnote">
+        فایل‌های شما در این نسخه آزمایشی به سرور ارسال نمی‌شوند.
+      </p>
+    </main>
   );
 }

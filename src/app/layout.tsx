@@ -1,19 +1,17 @@
-import type { Metadata } from 'next';
-import './globals.css';
-
+import type { Metadata } from "next";
+import "./globals.css";
 export const metadata: Metadata = {
-  title: 'Snapbox Excel Uploader',
-  description: 'Reusable Excel upload component',
+  title: "آپلودر Excel | اسنپ‌باکس",
+  description: "نمونه پردازش و بارگذاری فایل Excel",
 };
-
 export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
+  children,
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-      <html lang="fa" dir="rtl">
+    <html lang="fa" dir="rtl">
       <body>{children}</body>
-      </html>
+    </html>
   );
 }
